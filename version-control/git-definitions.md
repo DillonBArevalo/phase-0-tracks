@@ -17,3 +17,5 @@ Commits are when you take a branch and save any edits made in it (or additions/s
 * What is a merge conflict?
 
 A merge conflict happens when you have multiple branches attempting to change the same section of code (same line), or delete something that wasn't deleted on a different branch. It's git's way of making sure two people's or version's work isn't contradictory and, if it is, making sure that you get the changes you want in the master repository. 
+
+I made a change!
