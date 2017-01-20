@@ -10,3 +10,9 @@
 .small-font {
   font-size: .8em;
 }
+p:first-letter {
+  color: red;
+}
+ul > li {
+  color:gray;
+}
