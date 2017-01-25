@@ -1,0 +1,11 @@
+Elevator Algorithm:
+1. check what floor you are on .
+2. ask what floor the rider wants to go to.
+3. find button that corresponds to floor instruction. 
+4. push button.
+5. wait until elevator doors open.
+6. exit elevator
+
+In this elevator algorithm I'm making a few assumptions:
+ *the robot can ask for and receive/understand directions (what floor you want to go to)
+ * the robot can see what floor they are on (some elevators there is a screen that displays it, some elevators the button is lit)
