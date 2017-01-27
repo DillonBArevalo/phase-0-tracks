@@ -1,0 +1,25 @@
+body { 
+  background-image: url(https://assets-cdn.github.com/images/modules/logos_page/Octocat.png);
+  background-repeat: no-repeat;
+  font-family: Impact; 
+  color: black;
+  text-shadow: 1px 1px 1px white
+}
+
+header { 
+  
+}
+
+footer { 
+
+}
+
+section {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  border: 2px solid;
+  margin: 0px 
+}
+
