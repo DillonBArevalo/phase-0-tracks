@@ -1,11 +1,31 @@
 Elevator Algorithm:
 1. check what floor you are on .
 2. ask what floor the rider wants to go to.
-3. find button that corresponds to floor instruction. 
-4. push button.
-5. wait until elevator doors open.
-6. exit elevator
+3. if floor requested=floor on, end.
+4. else: find button that corresponds to floor instruction. 
+5. push button.
+6. wait until elevator doors open.
+7. end
 
 In this elevator algorithm I'm making a few assumptions:
  *the robot can ask for and receive/understand directions (what floor you want to go to)
  * the robot can see what floor they are on (some elevators there is a screen that displays it, some elevators the button is lit)
+ *the robot can recognize/push buttons
+ *the robot can find the correct button (as i don't know the button layout of the elevator and don't want to put in the work to account for any configuration i can think of i'm leaving it as is)
+if any of these assumptions are false, I'd have to be more specific with my algorithm but as i don't know what the robot is capable of (i assume it's pretty advanced!) I'm making a general algorithm with some assumptions listed.
+
+
+Doing Dishes:
+
+1. check if drying rack is empty 
+2. if not empty:
+3. if dishes are dry: put them away
+4. else, dry them and put them away (get rag from cupboard)
+5. rinse/scrub (get all the food off) dishes with hot water until sink is full of rinsed dishes (full meaning putting more in would require stacking of non easily stackable objects) or you have more dishes than will fit in drying rack
+if dish won't rinse, soak and set aside for next batch.
+6. if dish is a cast iron pan: put it on the stove (where we keep our clean cast irons) and dry it then skip to step 11 
+7. if sponge is not soapy: add soap to sponge
+8. scrub a dish with sponge and place it in the other sink well
+9. repeat 6,7 until all dishes are soapy in the other sink well. 
+10. rinse dishes and put them in drying rack one at a time.
+11. repeat 1-10 until all dishes are washed
