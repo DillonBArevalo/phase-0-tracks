@@ -35,10 +35,10 @@ while i <= number
   end
 
   more_allergies = true
-  puts "do you have any allergies? (list allergies one by one. when finished, enter 'no'"
+  puts "do you have any allergies? (list allergies one by one. when finished, enter 'no')"
   while more_allergies
     allergy=gets.chomp
-    if allergy == no
+    if allergy == "no"
       more_allergies = false
     elsif allergy.downcase == "sunshine"
       vampire_status = "Probably a vampire"
