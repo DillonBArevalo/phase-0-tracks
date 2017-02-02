@@ -1,0 +1,31 @@
+def practice
+  param1 = "This"
+  param2 = "That"
+  puts "What would you like"
+  yield(param1, param2)
+end
+
+# practice { |param1, param2| puts "I want #{param1} AND #{param2}"}
+
+arr =["carrot", "cucumber", "apple", "beef"]
+
+h ={
+  carrot: "vegetable",
+  cucumber: "vegetable",
+  apple: "fruit",
+  beef: "meat"
+}
+
+puts "Original array:"
+puts arr
+puts "Original hash:"
+puts h
+
+arr.each {|food_item| puts "I like to eat #{food_item}"}
+
+h.each {|food_item, food_type| puts "#{food_item} is #{food_type}"}
+
+puts "Post each array:"
+puts arr
+puts "Post each hash:"
+puts h
