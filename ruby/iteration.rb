@@ -67,10 +67,34 @@ h[:beef] = "protein"
 
 arr = arr.select {|food_item| food_item[0]=="c"}
 
-puts "post select array (after repopulation)"
+puts "Post select array (after repopulation)"
 puts arr
 
 h = h.select {|food_item, food_type| food_type=="vegetable"}
 
-puts "post select hash (after repopulation)"
+puts "Post select hash (after repopulation)"
 puts h
+
+arr = arr.drop_while {|food_item| food_item.length<8}
+puts "Post drop array"
+puts arr
+
+h[:apple] = "fruit"
+h[:beef] = "protein"
+
+puts "Repopulated hash:"
+puts h
+
+var=true
+
+h.delete_if do |food_item, food_type|
+  if food_type != "vegetable"
+    var=false
+  end
+  var
+end
+
+puts "Final hash:"
+puts h
+
+#I know we already used delete if, but there wasn't an easy option for hash for this challenge so this is what I thought of
