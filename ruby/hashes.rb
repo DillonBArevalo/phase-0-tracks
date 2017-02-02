@@ -26,4 +26,21 @@ puts "How old are you?"
 age=gets.chomp.to_i
 client_info[:age]=age
 
+puts "How many children do you have?"
+children=gets.chomp.to_i
+client_info[:number_of_children]=children
+
+puts "What decor theme would you like?"
+theme=gets.chomp
+client_info[:decor_theme]=theme
+
+puts "What is your phone number?"
+phone=gets.chomp
+phone.delete!("-")
+phone.delete!(".")
+phone.delete!(" ")
+#the above three lines are to make sure it's in the right format (just a string of numbers)
+phone=phone.to_i
+client_info[:phone_number]=phone
+
 puts client_info
