@@ -40,3 +40,12 @@ end
 
 puts "Post map array"
 puts arr
+
+h.delete_if{|food_item, food_type| food_item == :beef}
+puts "Post delete hash"
+puts h
+
+arr.delete_if{|food_item| food_item == "beef"}
+
+puts "Post delete array"
+puts arr
