@@ -33,11 +33,28 @@ def vowel_changer(vowel)
   vowel
 end
 
+#checks:
+#puts vowel_changer("a")
+#puts vowel_changer("e")
+#puts vowel_changer("i")
+#puts vowel_changer("o")
+#puts vowel_changer("u")
+
 def consonant_changer(consonant)
   consonants="bcdfghjklmnpqrstvwxyz"
+  if consonant == "z"
+    consonant = "b"
+    return consonant
+  end
   consonant.next!
   if !consonants.include?(consonant)
     consonant.next!
   end
   consonant
 end
+
+#checks:
+#consonants = "bcdfghjklmnpqrstvwxyz"
+#consonants=consonants.split("")
+#puts consonants
+#consonants.each {|consonant| puts consonant_changer(consonant)}
