@@ -111,4 +111,16 @@ def alias_maker(full_name)
   full_name
 end
 
-alias_maker("Dillon Arevalo")
+#p alias_maker("Felicia Torres")
+
+#now we make the user interface:
+
+name_to_modify = ""
+until name_to_modify == "quit"
+  puts "Hello! What name would you like to modify? (enter 'quit' to exit)"
+  name_to_modify=gets.chomp
+  if name_to_modify.downcase == "quit" || name_to_modify == ""
+    name_to_modify.downcase!
+    next
+  end
+end
