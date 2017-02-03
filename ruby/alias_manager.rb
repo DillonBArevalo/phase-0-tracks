@@ -85,16 +85,18 @@ def letter_changer(letter)
   return letter
 end
 
-letter_changer
+#("a".."z").each {|letter| puts letter_changer(letter)}
+#("A".."Z").each {|letter| puts letter_changer(letter)}
+
 
 def alias_maker(full_name)
   names = full_name.split(" ")
   names.reverse!
   names.map! {|single_name| single_name.split("")}
-  #p names
-  names.each do |name_array|
+  p names
+  names.map! do |name_array|
 
-    name_array.each do |letter|
+    name_array.map! do |letter|
 
       letter = letter_changer(letter)
 
@@ -105,4 +107,4 @@ def alias_maker(full_name)
   p names
 end
 
-#alias_maker("Dillon Arevalo")
+alias_maker("Dillon Arevalo")
