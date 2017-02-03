@@ -116,11 +116,22 @@ end
 #now we make the user interface:
 
 name_to_modify = ""
+name_list = {}
 until name_to_modify == "quit"
   puts "Hello! What name would you like to modify? (enter 'quit' to exit)"
   name_to_modify=gets.chomp
+
   if name_to_modify.downcase == "quit" || name_to_modify == ""
     name_to_modify.downcase!
     next
   end
+  
+  new_name = alias_maker(name_to_modify)
+  puts new_name
+  name_list[name_to_modify] = new_name
 end
+#p name_list
+
+name_list.each {|original_name,alias_name| puts "#{original_name} is also known as #{alias_name}"}
+
+#note that if a name is entered two different times, it will only store it once, though it will print out the alias every time it is entered.
