@@ -62,11 +62,47 @@ end
 #puts consonants
 #consonants.each {|consonant| puts consonant_changer(consonant)}
 
-def alias_maker(name)
-  names = name.split(" ")
-  names.reverse!
-  names.map! {|name| name.split("")}
-  #p names
+def letter_changer(letter)
+  if letter == letter.upcase #means it's a capital letter
+    letter.downcase!
+
+    if $consonants.include?(letter)
+      letter = consonant_changer(letter)
+    else
+      letter = vowel_changer(letter)
+    end
+
+    letter.upcase!
+  else
+
+    if $consonants.include?(letter)
+      letter = consonant_changer(letter)
+    else
+      letter = vowel_changer(letter)
+    end        
+
+  end
+  return letter
 end
 
-alias_maker("Dillon Arevalo")
+letter_changer
+
+def alias_maker(full_name)
+  names = full_name.split(" ")
+  names.reverse!
+  names.map! {|single_name| single_name.split("")}
+  #p names
+  names.each do |name_array|
+
+    name_array.each do |letter|
+
+      letter = letter_changer(letter)
+
+    end
+
+  end
+
+  p names
+end
+
+#alias_maker("Dillon Arevalo")
