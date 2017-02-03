@@ -3,7 +3,7 @@ write a method that takes consonants into next ones
 use .next! (after excepting z) and loop checking if it's a vowel, in which case we next it again.
 
 write a method that takes vowels into the next one
-gsub with each vowel to the next one
+make an if statement to change each vowel to the next one
 
 name method
 Input name and save the variable
@@ -17,3 +17,27 @@ for each letter:
 put the sub arrays back into words
 put the words together again
 =end
+
+def vowel_changer(vowel)
+  if vowel== "a"
+    vowel = "e"
+  elsif vowel == "e"
+    vowel = "i"
+  elsif vowel == "i"
+    vowel = "o"
+  elsif vowel == "o"
+    vowel = "u"
+  else 
+    vowel = "a"
+  end
+  vowel
+end
+
+def consonant_changer(consonant)
+  consonants="bcdfghjklmnpqrstvwxyz"
+  consonant.next!
+  if !consonants.include?(consonant)
+    consonant.next!
+  end
+  consonant
+end
