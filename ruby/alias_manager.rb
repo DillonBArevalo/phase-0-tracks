@@ -57,8 +57,16 @@ def consonant_changer(consonant)
 end
 
 #checks:
-consonants = "bcdfghjklmnpqrstvwxyz"
-consonants=consonants.split("")
+#consonants = "bcdfghjklmnpqrstvwxyz"
+#consonants=consonants.split("")
 #puts consonants
-consonants.each {|consonant| puts consonant_changer(consonant)}
+#consonants.each {|consonant| puts consonant_changer(consonant)}
 
+def alias_maker(name)
+  names = name.split(" ")
+  names.reverse!
+  names.map! {|name| name.split("")}
+  #p names
+end
+
+alias_maker("Dillon Arevalo")
