@@ -93,18 +93,22 @@ def alias_maker(full_name)
   names = full_name.split(" ")
   names.reverse!
   names.map! {|single_name| single_name.split("")}
-  p names
+  #p names
   names.map! do |name_array|
 
     name_array.map! do |letter|
 
-      letter = letter_changer(letter)
+       letter_changer(letter)
 
     end
 
   end
-
-  p names
+  #p names
+  names.map! {|name_array| name_array.join}
+  #p names
+  full_name = names.join(" ")
+  #p full_name
+  full_name
 end
 
 alias_maker("Dillon Arevalo")
