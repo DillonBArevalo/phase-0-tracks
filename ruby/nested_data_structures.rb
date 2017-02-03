@@ -38,3 +38,5 @@ kitchen = {
 
 
 puts kitchen[:stove][2]
+puts kitchen[:refrigerator][:fridge][:middle_shelf][1]
+puts kitchen[:drawers][:tools][1].upcase
