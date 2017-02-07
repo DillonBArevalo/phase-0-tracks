@@ -52,3 +52,19 @@ end
 
 cat_list = Array.new
 
+i=0
+
+while i<50 
+
+  cat_name = Cat.new
+  cat_list << cat_name
+  i +=1
+
+end
+
+#puts cat_list
+
+cat_list.each do |cat|
+  cat.purr
+  cat.hiss
+end
