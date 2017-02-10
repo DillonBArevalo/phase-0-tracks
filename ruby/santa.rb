@@ -1,5 +1,8 @@
 class Santa
 
+  attr_reader :age, :ethnicity
+  attr_accessor :gender
+
   def initialize(gender, ethnicity)
     puts "Initializing Santa Instance ..."
     @gender = gender
@@ -24,17 +27,6 @@ class Santa
     @reindeer_ranking.insert(-1, @reindeer_ranking.delete(reindeer_name))
   end
 
-  def gender=(new_gender)
-    @gender=new_gender
-  end
-
-  def age
-    @age
-  end
-
-  def ethnicity
-    @ethnicity
-  end
 
 end
 
@@ -51,6 +43,7 @@ jose.eat_milk_and_cookies("Snicker-doodle")
 =end
 
 
+=begin
 santas = []
 santas << Santa.new("agender", "black")
 santas << Santa.new("female", "Latino")
@@ -59,3 +52,14 @@ santas << Santa.new("male", "Japanese")
 santas << Santa.new("female", "prefer not to say")
 santas << Santa.new("gender fluid", "Mystical Creature (unicorn)")
 santas << Santa.new("N/A", "N/A")
+
+
+santa = Santa.new("cis male", "Peruvian")
+santa.speak
+santa.eat_milk_and_cookies("Snicker-doodle")
+puts santa.age
+puts santa.ethnicity
+puts santa.gender
+puts santa.celebrate_birthday
+puts santa.get_mad_at("Dasher")
+=end
