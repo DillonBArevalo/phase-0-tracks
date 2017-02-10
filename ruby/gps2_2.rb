@@ -4,16 +4,22 @@
   # Create an empty hash
   # separate string into an array of individual items
   # make each one a key for a hash with a default quantity
-  # print the list to the console [can you use one of your other methods here?]
 # output: A hash of the items with default quantities
 
 def make_list(item_string)
   grocery_list = {}
   items_array = item_string.split(" ")
   #puts items_array
+
+  items_array.each do |shopping_item|
+    grocery_list[shopping_item] = 1
+  end
+  
+  puts grocery_list
+  return grocery_list  
 end
 
-#make_list("carrots apples cereal pizza")
+
 
 
 # Method to add an item to a list
@@ -36,3 +42,7 @@ end
 # input:
 # steps:
 # output:
+
+#===================Driver Code===================
+
+make_list("carrots apples cereal pizza")
