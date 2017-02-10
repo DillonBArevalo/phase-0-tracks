@@ -51,10 +51,21 @@ end
 # steps:
 # output:
 
+def change_quantity(grocery_list, item_name, quantity)
+  grocery_list[item_name] = quantity
+  puts grocery_list
+  return grocery_list
+end
+
 # Method to print a list and make it look pretty
 # input:
 # steps:
 # output:
+def print_list(grocery_list)
+  grocery_list.each do |item, quantity|
+    puts "#{item}: quantity: #{quantity}"
+  end
+end
 
 #===================Driver Code===================
 
@@ -65,3 +76,8 @@ puts grocery_list
 
 remove_item(grocery_list, "pears")
 puts grocery_list
+
+change_quantity(grocery_list, "pizza", 100)
+puts grocery_list
+
+print_list(grocery_list)
