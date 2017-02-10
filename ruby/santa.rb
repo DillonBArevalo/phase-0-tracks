@@ -16,6 +16,26 @@ class Santa
     puts "That was a good #{cookie_type}!"
   end
 
+  def celebrate_birthday
+    @age += 1
+  end
+
+  def get_mad_at(reindeer_name)
+    @reindeer_ranking.insert(-1, @reindeer_ranking.delete(reindeer_name))
+  end
+
+  def gender=(new_gender)
+    @gender=new_gender
+  end
+
+  def age
+    @age
+  end
+
+  def ethnicity
+    @ethnicity
+  end
+
 end
 
 
@@ -23,7 +43,8 @@ end
 
 #=================Driver Code=================
 
-=beginjose = Santa.new
+=begin
+jose = Santa.new
 
 jose.speak
 jose.eat_milk_and_cookies("Snicker-doodle")
