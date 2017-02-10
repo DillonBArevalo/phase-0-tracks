@@ -9,6 +9,7 @@ tail length:
 Name: 
 fur color: 
 eye color:
+age:
 
 BEHAVIOR -----------------------
 tail wag
