@@ -18,7 +18,8 @@ class TodoList
     @list
   end
 
-  def get_item(item)
+  def get_item(i)
+    @list[i]
   end
 
 end
