@@ -28,10 +28,23 @@ end
   # make item name
 # output:
 
+def add_item(grocery_list, item_name, quantity=1)
+  grocery_list[item_name] = quantity
+  puts grocery_list
+  return grocery_list
+end
+
+
 # Method to remove an item from the list
 # input:
 # steps:
 # output:
+
+def remove_item(grocery_list, item_name)
+  grocery_list.delete(item_name)
+  puts grocery_list
+  return grocery_list
+end
 
 # Method to update the quantity of an item
 # input:
@@ -45,4 +58,10 @@ end
 
 #===================Driver Code===================
 
-make_list("carrots apples cereal pizza")
+grocery_list = make_list("carrots apples cereal pizza")
+
+add_item(grocery_list, "pears", 4)
+puts grocery_list
+
+remove_item(grocery_list, "pears")
+puts grocery_list
