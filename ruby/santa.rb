@@ -1,7 +1,7 @@
 class Santa
 
-  attr_reader :age, :ethnicity
-  attr_accessor :gender
+  attr_reader :ethnicity
+  attr_accessor :gender, :age
 
   def initialize(gender, ethnicity)
     puts "Initializing Santa Instance ..."
@@ -27,7 +27,18 @@ class Santa
     @reindeer_ranking.insert(-1, @reindeer_ranking.delete(reindeer_name))
   end
 
+end
 
+example_genders = ["agender", "female", "bigender", "male", "female", "gender fluid", "N/A"]
+example_ethnicities = ["Peruvian", "black", "Latino", "white", "Japanese-African", "prefer not to say", "Mystical Creature (unicorn)", "N/A"]
+random_numbers = Random.new
+100000.times do |i|
+  santa = Santa.new(example_genders.sample, example_ethnicities.sample)
+  santa.age = rand(141)
+  puts santa.gender
+  puts santa.ethnicity
+  puts santa.age
+  #note i'm not accessing reindeer_ranking as that will always be the same unless i also write code to modify it
 end
 
 
