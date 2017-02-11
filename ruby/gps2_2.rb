@@ -94,3 +94,21 @@ add_item(grocery_list, "Ice Cream", 4)
 remove_item(grocery_list, "Lemonade")
 change_quantity(grocery_list, "Ice Cream", 1)
 print_list(grocery_list)
+
+#===================Reflections===================
+=begin
+the specific format for pseudocode used in this assignment was pretty useful.
+I've never given aaaall that much thought to the syntax of my pseudocode so this was nice.
+
+Because we want to have a list of items with a quality to them (namely a quantity) a hash makes a lot more sense. an array would work but the format would basically just be that of a hash anyway so using a hash makes more sense
+
+uhh... A method returns whatever you set it to return or the return of the last operation in it?
+I feel like this wasn't really explicitly covered in this gps and has been explicitly covered earlier.
+
+you can pass any data type (object) we've looked at thus far. note that things like methods return objects and thus can be passed as arguments
+
+have the relevant information be passed into them as arguments and return the results. as most things in ruby are mutable modifying it within the method will pass things out as well.
+
+I did some research on mutability that taught me some new things.
+I don't currently feel confused by anything in here.
+=end
