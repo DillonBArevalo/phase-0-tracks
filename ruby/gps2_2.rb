@@ -6,7 +6,7 @@
   # make each one a key for a hash with a default quantity
 # output: A hash of the items with default quantities
 
-def make_list(item_string)
+def make_list(item_string = "")
   grocery_list = {}
   items_array = item_string.split(" ")
   #puts items_array
@@ -68,7 +68,7 @@ def print_list(grocery_list)
 end
 
 #===================Driver Code===================
-
+=begin
 grocery_list = make_list("carrots apples cereal pizza")
 
 add_item(grocery_list, "pears", 4)
@@ -80,4 +80,14 @@ puts grocery_list
 change_quantity(grocery_list, "pizza", 100)
 puts grocery_list
 
+print_list(grocery_list)
+=end
+
+grocery_list = make_list
+add_item(grocery_list, "Lemonade", 2)
+add_item(grocery_list, "Tomatoes", 3)
+add_item(grocery_list, "Onions", 1)
+add_item(grocery_list, "Ice Cream", 4)
+remove_item(grocery_list, "Lemonade")
+change_quantity(grocery_list, "Ice Cream", 1)
 print_list(grocery_list)
