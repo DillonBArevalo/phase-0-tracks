@@ -8,14 +8,17 @@
 
 def make_list(item_string = "")
   grocery_list = {}
+=begin
   items_array = item_string.split(" ")
   #puts items_array
 
   items_array.each do |shopping_item|
     grocery_list[shopping_item] = 1
   end
-  
-  puts grocery_list
+=end
+  grocery_list = Hash[item_string.split(" ").map {|item| [item, 1]}] 
+  #I think this is less readable, but i wanted to find another way to do it
+  #puts grocery_list
   return grocery_list  
 end
 
@@ -30,7 +33,7 @@ end
 
 def add_item(grocery_list, item_name, quantity=1)
   grocery_list[item_name] = quantity
-  puts grocery_list
+  #puts grocery_list
   return grocery_list
 end
 
@@ -42,7 +45,7 @@ end
 
 def remove_item(grocery_list, item_name)
   grocery_list.delete(item_name)
-  puts grocery_list
+  #puts grocery_list
   return grocery_list
 end
 
@@ -53,7 +56,7 @@ end
 
 def change_quantity(grocery_list, item_name, quantity)
   grocery_list[item_name] = quantity
-  puts grocery_list
+  #puts grocery_list
   return grocery_list
 end
 
@@ -63,7 +66,7 @@ end
 # output:
 def print_list(grocery_list)
   grocery_list.each do |item, quantity|
-    puts "#{item}: quantity: #{quantity}"
+    puts "#{item}: #{quantity}"
   end
 end
 
