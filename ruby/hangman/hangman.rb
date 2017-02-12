@@ -20,7 +20,7 @@ guess numbers:
 
 class Hangman
 
-  attr_reader :answer, :current_state, :guesses, :letters_guessed
+  attr_accessor :answer, :current_state, :guesses, :letters_guessed
 
   def initialize
     @answer = ""

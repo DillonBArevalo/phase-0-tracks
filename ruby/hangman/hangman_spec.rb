@@ -33,16 +33,37 @@ describe Hangman do
     game.guess_letter("e")
     expect(game.current_state).to eq ["e-----e"]
     expect(game.guesses).to eq [8]
-    game.guess_letter("0")
+  end
+
+  it "doesn't count double guesses against user" do
+    game.start_game("example")
+    game.guess_letter("e")
+    game.guess_letter("e")
     expect(game.current_state).to eq ["e-----e"]
-    expect(game.guesses).to eq [7]
+    expect(game.guesses).to eq [8]
   end
 
   it "takes an incorrect guess, doesn't change the current state, updates guesses and letters guessed appropriately" do
     game.start_game("example")
-
+    game.guess_letter("o")
+    expect(game.current_state).to eq ["-------"]
+    expect(game.guesses).to eq [7]
   end
 
+  it "ends the game in failure if guesses=0 and the word isn't guessed" do
+    game.start_game("example")
+    game.guesses = 0
+    expect(game.is_over).to eq ["loss"]
+    game.guesses = 1
+    expect(game.guess_letter("o")).to eq ["loss"]
+  end
 
+  it "ends the game in success if the word is guessed (guesses = 0 or not)" do
+    game.start_game("example")
+    game.current_state = "example"
+    expect(game.is_over).to eq ["win"]
+    game.guesses = 0
+    expect(game.is_over).to eq ["win"]
+  end
 
 end
