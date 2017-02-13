@@ -39,17 +39,24 @@ class Hangman
     end
   end
 
-  def update_guesses(letter)
-  end
-
-  def update_current_state()
+  def update_current_state(letter)
+    @letters_guessed << letter
+    i=0
+    @answer.each_char do |char|
+      if letter == char
+        @current_state[i] = letter
+      end
+      i+=1
+    end
   end
 
   def start_game(answer)
     #sets answer
-    @answer = answer
+    @answer = answer.downcase
+    #resets current state from last game (for multiple game functionality)
+    @current_state = ""
     #sets current state
-    answer.each_char do |char|
+    answer.downcase.each_char do |char|
       if char != " " 
         @current_state << "-"
       else
@@ -69,10 +76,45 @@ class Hangman
       @guesses = 6
     end
     #refreshes letters guessed
+    puts "You are trying to guess: #{@current_state}"
     @letters_guessed = [] #for replayability
   end
 
   def guess_letter(letter)
+    if @letters_guessed.include?(letter)
+      puts "You have already guessed #{letter}!"
+    elsif @answer.include?(letter)
+      update_current_state(letter)
+      puts "Yes, #{letter} is in the word/phrase!"
+      puts "Your knowledge of the word is now: #{@current_state}"
+      puts "You have #{@guesses} guesses left!"
+      @letters_guessed << letter
+    else
+      @letters_guessed << letter
+      @guesses -= 1
+      puts "#{letter} is, unfortunately, not in the word/phrase. Try again!"
+      puts "Your knowledge of the word is now: #{@current_state}"
+      puts "You have #{@guesses} guesses left!" 
+    end
+    if @guesses == 0 || @current_state == @answer
+      return is_over
+    else
+      return "playing"
+    end
+  end
+
+  def play
+    puts "What word would you like the other player to guess?"
+    start_game(gets.chomp)
+    game_state = "playing"
+    while game_state == "playing"
+      puts "What letter would you like to guess?"
+      game_state = guess_letter(gets.chomp)
+    end
+    puts "Thanks for playing!"
   end
 
 end
+
+game = Hangman.new
+game.play
