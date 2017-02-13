@@ -30,6 +30,13 @@ class Hangman
   end
 
   def is_over
+    if @answer == @current_state
+      puts "Nice job! You win!"
+      return "win"
+    else
+      puts "Aww, was that too hard?"
+      return "loss"
+    end
   end
 
   def update_guesses(letter)
@@ -39,6 +46,30 @@ class Hangman
   end
 
   def start_game(answer)
+    #sets answer
+    @answer = answer
+    #sets current state
+    answer.each_char do |char|
+      if char != " " 
+        @current_state << "-"
+      else
+        @current_state << " "
+      end
+    end
+    #sets guesses
+    if answer.delete(" ").length < 5
+      @guesses = 10
+    elsif answer.delete(" ").length < 7
+      @guesses = 9
+    elsif answer.delete(" ").length < 9
+      @guesses = 8
+    elsif answer.delete(" ").length < 11
+      @guesses = 7
+    else
+      @guesses = 6
+    end
+    #refreshes letters guessed
+    @letters_guessed = [] #for replayability
   end
 
   def guess_letter(letter)
