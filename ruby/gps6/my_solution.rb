@@ -16,7 +16,11 @@ class VirusPredictor
   def initialize(state_of_origin, population_density, population)
     @state = state_of_origin
     @population = population
-    @population_density = population_density
+    @population_density = population_density #note that this isn't used anymore once in inputted the scalar functionality. i kept it in just in case it will be wanted in future updates of this project?
+    @population_density_scalar = (population_density/50).floor
+    if @population_density_scalar > 4
+      @population_density_scalar = 4
+    end
   end
 
   #This runs both predicted_deaths and speed_of_spread with all the relevant variables to a specific instance
@@ -27,6 +31,7 @@ class VirusPredictor
   end
 
   #this tag makes the following methods non accessible outside of their use in the constructed methods of this class (you can't call instance.private_method)
+  #this is useful when you want to have methods used only as parts of another method in the class.
   private
 
   #predicted deaths calculates how many deaths will happen in a state based off its population
@@ -36,18 +41,10 @@ class VirusPredictor
   #the floor method is one we haven't strictly seen before but it rounds the number it is applied to down to the nearest int.
   def predicted_deaths
     # predicted deaths is solely based on population density
-    if @population_density >= 200
-      number_of_deaths = (@population * 0.4).floor
-    elsif @population_density >= 150
-      number_of_deaths = (@population * 0.3).floor
-    elsif @population_density >= 100
-      number_of_deaths = (@population * 0.2).floor
-    elsif @population_density >= 50
-      number_of_deaths = (@population * 0.1).floor
-    else
+    number_of_deaths = (@population * (@population_density_scalar/10.0)).floor
+    if number_of_deaths == 0
       number_of_deaths = (@population * 0.05).floor
     end
-
     print "#{@state} will lose #{number_of_deaths} people in this outbreak"
 
   end
@@ -58,19 +55,7 @@ class VirusPredictor
   def speed_of_spread #in months
     # We are still perfecting our formula here. The speed is also affected
     # by additional factors we haven't added into this functionality.
-    speed = 0.0
-
-    if @population_density >= 200
-      speed += 0.5
-    elsif @population_density >= 150
-      speed += 1
-    elsif @population_density >= 100
-      speed += 1.5
-    elsif @population_density >= 50
-      speed += 2
-    else
-      speed += 2.5
-    end
+    speed = 2.5 - @population_density_scalar/2.0
 
     puts " and will spread across the state in #{speed} months.\n\n"
 
@@ -83,6 +68,7 @@ end
 # DRIVER CODE
  # initialize VirusPredictor for each state
 
+#this belongs out here in driver code as it's only using the methods of the class and it needs inputted data.
 STATE_DATA.each do |state_key, population_data|
   state = VirusPredictor.new(state_key, population_data[:population_density], population_data[:population])
   state.virus_effects
