@@ -22,8 +22,8 @@ class VirusPredictor
   #This runs both predicted_deaths and speed_of_spread with all the relevant variables to a specific instance
   #these both print information about the virus and its effects
   def virus_effects
-    predicted_deaths(@population_density, @population, @state)
-    speed_of_spread(@population_density, @state)
+    predicted_deaths
+    speed_of_spread
   end
 
   #this tag makes the following methods non accessible outside of their use in the constructed methods of this class (you can't call instance.private_method)
@@ -32,9 +32,9 @@ class VirusPredictor
   #predicted deaths calculates how many deaths will happen in a state based off its population
   #there is a predetermined function that was simply plugged in here with an if statement. 
   #it then prints the result with interpolation into a nice, clean statement.
-  #note: it takes but never uses a state parameter.
+  #note: it takes but never uses a its parameters.
   #the floor method is one we haven't strictly seen before but it rounds the number it is applied to down to the nearest int.
-  def predicted_deaths(population_density, population, state)
+  def predicted_deaths
     # predicted deaths is solely based on population density
     if @population_density >= 200
       number_of_deaths = (@population * 0.4).floor
@@ -53,9 +53,9 @@ class VirusPredictor
   end
 
   #This method does a very similar thing to the predicted deaths method.
-  #It takes population density and the state in question (though, as in the previous method, it never uses the state parameter)
+  #It takes population density and the state in question (though, as in the previous method, it never uses the state parameter or any others)
   #and uses a pre-defined formula (that is implemented with an if/else statement) to print out the speed the virus will spread
-  def speed_of_spread(population_density, state) #in months
+  def speed_of_spread #in months
     # We are still perfecting our formula here. The speed is also affected
     # by additional factors we haven't added into this functionality.
     speed = 0.0
