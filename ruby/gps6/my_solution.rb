@@ -91,3 +91,26 @@ alaska.virus_effects
 
 #=======================================================================
 # Reflection Section
+=begin
+What are the differences between the two different hash syntaxes shown in the state_data file?
+
+  The first one is expanded and much easier to read if it's a large hash. it also uses hash rockets to declare its keys and values instead of the symbol: value style.
+
+What does require_relative do? How is it different from require?
+
+  see answer above (in comments above require relative. i think you're supposed to put this in your own words instead of the group's words but i worked by myself, so it'd be exactly the same)
+
+What are some ways to iterate through a hash?
+
+  for hashes there are many versions of .each. there is the .each that takes both the key and the value, there's each_key (which only uses the keys), each_pair (which is the same as each), and each_value (which iterates through the values with a block).
+
+When refactoring virus_effects, what stood out to you about the variables, if anything?
+
+  the variables were all attributes, which can be accessed in any instance methods anyway and thus passing them was entirely irrelevant.
+
+What concept did you most solidify in this challenge?
+
+  the thing most solidified for me was if I'm ever writing code that anyone else may ever want to look at/use comments are super important.
+
+
+=end
