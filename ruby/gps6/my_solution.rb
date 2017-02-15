@@ -1,7 +1,7 @@
 # Virus Predictor
 
 # I worked on this challenge by myself.
-# We spent [#] hours on this challenge.
+# I [We] spent 1 hour on this challenge.
 
 # EXPLANATION OF require_relative
 #require_relative includes another file in this file. thus, I can access the STATE_DATA hash that is in the state data file.
