@@ -35,6 +35,29 @@ function key_value_match(obj1, obj2) {
   return false;
 };
 
+/*
+For random string generator:
+create a string of the alphabet/ any other characters I want to use in my strings
+create an empty array
+create a for loop for running the string creator with an empty string created in it
+create a for loop with while i<= random number.
+add to empty string with letter generated randomly from my alphabet
+end inner loop and push string into array
+end outer loop and return array.
+*/
+
+function string_generator(number_of_words) {
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  var created_words = [];
+  for (var i=0; i<number_of_words; i++) {
+    var word = "";
+    for (var j=0; j<(Math.floor(Math.random()*10))+1; j++) {
+      word += alphabet[Math.floor(Math.random()*alphabet.length)];
+    };
+    created_words.push(word);
+  };
+  return created_words;
+};
 
 //============Driver Code=============
 
@@ -42,3 +65,4 @@ console.log(longest_phrase(["long phrase","longest phrase","longer phrase"]));
 console.log(longest_phrase(["long phrase","longer phrase","longest phrase"]));
 console.log(key_value_match({name: "Steven", age: 54}, {name: "Tamir", age: 54}));
 console.log(key_value_match({name: "Steven", age: 54}, {name: "Tamir", age: 52}));
+console.log(string_generator(10))
