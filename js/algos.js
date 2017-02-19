@@ -26,16 +26,19 @@ function key_value_match(obj1, obj2) {
   for (var i = 0; i < keys1.length; i++) {
     for (var j = 0; j < keys2.length; j++) {
       if (keys1[i] == keys2[j]) {
-        if (obj1(keys1[i]) == obj2(keys2[j])) {
+        if (obj1[keys1[i]] == obj2[keys2[j]]) {
           return true;
         };
       };
     };
   };
+  return false;
 };
 
 
 //============Driver Code=============
 
-console.log(longest_phrase(["long phrase","longest phrase","longer phrase"]))
-console.log(longest_phrase(["long phrase","longer phrase","longest phrase"]))
+console.log(longest_phrase(["long phrase","longest phrase","longer phrase"]));
+console.log(longest_phrase(["long phrase","longer phrase","longest phrase"]));
+console.log(key_value_match({name: "Steven", age: 54}, {name: "Tamir", age: 54}));
+console.log(key_value_match({name: "Steven", age: 54}, {name: "Tamir", age: 52}));
