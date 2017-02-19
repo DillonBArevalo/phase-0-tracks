@@ -65,4 +65,9 @@ console.log(longest_phrase(["long phrase","longest phrase","longer phrase"]));
 console.log(longest_phrase(["long phrase","longer phrase","longest phrase"]));
 console.log(key_value_match({name: "Steven", age: 54}, {name: "Tamir", age: 54}));
 console.log(key_value_match({name: "Steven", age: 54}, {name: "Tamir", age: 52}));
-console.log(string_generator(10))
+console.log(string_generator(10));
+for (var i=0; i<10; i++) {
+  phrases = string_generator(i+1);
+  console.log(phrases);
+  console.log(longest_phrase(phrases));
+};
