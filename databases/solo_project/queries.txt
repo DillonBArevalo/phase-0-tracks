@@ -1,0 +1,35 @@
+1
+sqlite> SELECT * FROM items;
+1|milk|8|2017-02-24|1
+2|carrots|50|2017-02-24|3
+3|apple juce concentrate|20|2017-02-24|2
+4|frozen pizza|5|2017-02-24|2
+
+2
+sqlite> UPDATE items SET restocked_on="2017-01-01" WHERE group_id=2;
+sqlite> SELECT * FROM items;
+1|milk|8|2017-02-24|1
+2|carrots|50|2017-02-24|3
+3|apple juce concentrate|20|2017-01-01|2
+4|frozen pizza|5|2017-01-01|2
+
+3
+sqlite> SELECT * FROM items, grouping WHERE items.group_id=grouping.id;
+1|milk|8|2017-02-24|1|1|beverages
+2|carrots|50|2017-02-24|3|3|vegetables
+3|apple juce concentrate|20|2017-01-01|2|2|frozen foods
+4|frozen pizza|5|2017-01-01|2|2|frozen foods
+
+4
+sqlite> SELECT items.name, items.restocked_on, grouping.name FROM items JOIN grouping ON items.group_id=grouping.id;
+milk|2017-02-24|beverages
+carrots|2017-02-24|vegetables
+apple juce concentrate|2017-01-01|frozen foods
+frozen pizza|2017-01-01|frozen foods
+
+5
+sqlite> DELETE FROM items WHERE name="apple juce concentrate";
+sqlite> SELECT * FROM items;
+1|milk|8|2017-02-24|1
+2|carrots|50|2017-02-24|3
+4|frozen pizza|5|2017-01-01|2
