@@ -57,5 +57,3 @@ sqlite> SELECT items.name, items.restocked_on, grouping.name
 milk|2017-02-24|beverages
 carrots|2017-02-24|vegetables
 frozen pizza|2017-01-01|frozen foods
-
-not sure what this did differently from join. will check soon.
