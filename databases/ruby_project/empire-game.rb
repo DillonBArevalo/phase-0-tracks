@@ -332,6 +332,7 @@ def view_character_list(db)
   puts ""
   return names
 end
+
 def view_command(db)
   names = view_character_list(db)
   puts "Enter any name to view that particular fighter or enter all to view all fighters"
@@ -349,6 +350,104 @@ def view_command(db)
 end
 
 def edit_command(db)
+  view_character_list(db)
+  puts "Which character would you like to edit?"
+  character_to_edit = gets.chomp
+  character_info_hash = db.execute("SELECT * FROM fighters WHERE name='#{character_to_edit}'")[0]
+  puts ""
+  puts "Here are their stats:"
+  puts ""
+  view_fighter(db, character_to_edit)
+  puts ""
+  puts "What data would you like to edit? (if you want to change a skill, enter 'skills' and you will be prompted to change both)"
+  data_to_edit = gets.chomp.downcase
+  case data_to_edit
+
+  when "name"
+    puts "What would you like the new name to be?"
+    new_name = gets.chomp
+    db.execute("UPDATE fighters SET name='#{new_name}' WHERE name= '#{character_to_edit}'")
+
+  when "strength"
+    puts "What would you like the new strength score to be?"
+    new_str = gets.chomp.to_i
+    db.execute("UPDATE fighters SET str=#{new_str} WHERE name='#{character_to_edit}'")
+
+  when "dexterity"
+    puts "What would you like the new dexterity score to be?"
+    new_dex = gets.chomp.to_i
+    db.execute("UPDATE fighters SET dex=#{new_dex} WHERE name='#{character_to_edit}'")
+
+  when "constitution"
+    puts "What would you like the new constitution score to be?"
+    new_con = gets.chomp.to_i
+    db.execute("UPDATE fighters SET con=#{new_con} WHERE name='#{character_to_edit}'")
+
+  when "weapons"
+    puts "Which weapon set would you like to use, 'sword and light shield', 'war pick', or 'mace and heavy shield'?"
+    case  gets.chomp.downcase
+    when 'sword and light shield'
+      new_weapons = 1
+    when 'war pick'
+      new_weapons = 2
+    when 'mace and heavy shield'
+      new_weapons = 3
+    else 
+      puts "incorrect entry"
+      return
+    end
+    db.execute("UPDATE fighters SET weapon_set_id=#{new_weapons} WHERE name='#{character_to_edit}'")
+
+  when "armor"
+    puts "Which armor would you like to use, 'leather armor', 'scale armor', or 'full plate armor'?"
+    case gets.chomp.downcase
+    when 'leather armor'
+      new_armor = 1
+    when 'scale armor'
+      new_armor = 2
+    when 'full plate armor'
+      new_armor = 3
+    else
+      puts "incorrect entry"
+      return
+    end
+    db.execute("UPDATE fighters SET armor_id=#{new_armor} WHERE name='#{character_to_edit}'")
+
+  when "class"
+    puts "Would you like to be a Warrior or a Soldier?"
+    case gets.chomp.downcase
+    when "soldier"
+      new_class = 1
+    when "warrior"
+      new_class = 2
+    else
+      puts "incorrect entry"
+      return
+    end
+    puts ""
+    puts "You must also now change your skills:"
+    new_skills = select_skills(db, new_class, character_info_hash["weapon_set_id"])
+    skill1 = new_skills[0].to_i
+    skill2 = new_skills[1].to_i
+    db.execute("UPDATE fighters SET class_id=#{new_class}, skill1_id=#{skill1}, skill2_id=#{skill2} WHERE name='#{character_to_edit}'")
+
+  when "skills"
+    new_skills = select_skills(db, character_info_hash["class_id"], character_info_hash["weapon_set_id"])
+    skill1 = new_skills[0].to_i
+    skill2 = new_skills[1].to_i 
+    db.execute("UPDATE fighters SET skill1_id=#{skill1}, skill2_id=#{skill2} WHERE name='#{character_to_edit}'")
+
+  else
+    puts "Whoops! That wasn't one of the options!"
+  end
+
+  puts "Here's the character with the edited data:"
+  puts ""
+  if data_to_edit == "name"
+    view_fighter(db, new_name)
+  else
+    view_fighter(db, character_to_edit)
+  end
 end
 
 #==========Driver Code=============
@@ -381,6 +480,7 @@ while continue
     view_command(db)
 
   when "edit"
+    edit_command(db)
 
   when "exit"
     continue = false
