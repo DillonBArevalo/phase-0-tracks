@@ -1,4 +1,5 @@
 #this is a character creator program for use in a combat simulator for a game system I've been designing with a friend of mine.
+#it doesn't implement all the features of the game (even when restricting to character creation) but i think that's fine.
 #it was created as an alternative tabletop role-playing game (D&D is the famous example)
 #the basic premise is two fighters take turns using skills and allocating energy to their attacks and defenses until one of them wins the fight. 
 =begin
@@ -56,32 +57,54 @@ require "sqlite3"
 db=SQLite3::Database.new("empire_fight.db")
 db.results_as_hash = true
 
-def make_data_tables()
+def make_data_tables(db)
   #make weapon table, armor table, class table, and skills table
   class_table_cmd = <<-SQL
     CREATE TABLE classes (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
-      bonus_to_offense BOOLEAN,
-      bonus_to_defense BOOLEAN,
+      base_class_skill VARCHAR(225)
     );
   SQL
-  
+
   skill_table_cmd = <<-SQL
     CREATE TABLE skills (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
-      level INT,
+      levels INT,
       activate_during VARCHAR(225),
+      usable_for_id INT,
+      FOREIGN KEY (usable_for_id) REFERENCES classes(id)
+    );
+  SQL
+
+  weapon_table_cmd = <<-SQL
+    CREATE TABLE weapons (
+      id INTEGER PRIMARY KEY,
+      name VARCHAR(225),
+      attack_formula VARCHAR(225),
+      damage_formula VARCHAR(225),
+      defense_formula VARCHAR(225),
+      weapon_class INT
+    );
+  SQL
+
+  armor_table_cmd = <<-SQL
+    CREATE TABLE armors (
+      id INTEGER PRIMARY KEY,
+      name VARCHAR(225),
+      damage_resistance VARCHAR(225),
+      energy_budget_reduction INT,
+      passive_def_boost INT
     );
   SQL
 end
 
-def populate_data_tables()
+def populate_data_tables(db)
 
 end
 
-def make_fighter_table()
+def make_fighter_table(db)
   fighter_table_cmd = <<-SQL
     CREATE TABLE fighers (
       id INTEGER PRIMARY KEY,
