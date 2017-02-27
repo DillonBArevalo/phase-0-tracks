@@ -124,6 +124,14 @@ def create_fighter(db)
   fighter_data = []
   puts "Let's make a fighter! What would you like to name them?"
   fighter_data << gets.chomp
+  stats = create_stat_values
+  puts "You've rolled the following values for stats:#{stats}. What order would you like to prioritize STR DEX and CON in? (write str, dex, and con separated by spaces in the order you'd like them from highest to lowest)"
+  order = gets.chomp.downcase.split
+  fighter_data << (stats[order.index("str")])
+  fighter_data << (stats[order.index("dex")])
+  fighter_data << (stats[order.index("con")])
+
+  p fighter_data
 end
 
 def make_fighter_table(db)
@@ -144,8 +152,6 @@ def make_fighter_table(db)
   SQL
   db.execute(fighter_table_cmd)
 end
-
-
 
 def create_stat_values()
   stats = []
@@ -175,6 +181,4 @@ else
 end
 db.results_as_hash = true
 
-5.times do |i|
-  p create_stat_values
-end
+create_fighter(db)
