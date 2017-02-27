@@ -277,8 +277,10 @@ def select_skills(db, class_id, weapon_id)
 
   skill_hashes.each do |skill_hash|
     skill_hash.each_pair do |primary_key, value|
-      next if primary_key == "id" || primary_key == "usable_for_id" || primary_key.class != String
-      if primary_key == "activate_during"
+      next if primary_key == "usable_for_id" || primary_key.class != String
+      if primary_key == "id" 
+        puts "#{value}"
+      elsif primary_key == "activate_during"
         puts "This ability is available: #{value}"
       else
         puts "#{primary_key}: #{value}"
@@ -332,4 +334,29 @@ else
 end
 db.results_as_hash = true
 
-create_fighter(db)
+
+puts "Welcome! This is a character creation program for a stripped down version of a game I'm trying to design with a friend from college."
+continue = true
+while continue
+  puts "You can:"
+  puts "Create a new character"
+  puts "Edit an existing character"
+  puts "Or simply view any or all of the existing characters"
+  puts "What would you like to do? (input 'create', 'edit', 'view', or 'exit')"
+  case gets.chomp.downcase
+
+  when "create"
+    create_fighter(db)
+
+  when "view"
+
+  when "edit"
+
+  when "exit"
+    continue = false
+
+  else
+    puts "Whoops! That wasn't one of the options!"
+  end
+end
+
