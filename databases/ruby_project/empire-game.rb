@@ -54,9 +54,6 @@ methods/driver code:
 
 require "sqlite3"
 
-db=SQLite3::Database.new("empire_fight.db")
-db.results_as_hash = true
-
 def make_data_tables(db)
   #make weapon table, armor table, class table, and skills table
   class_table_cmd = <<-SQL
@@ -108,12 +105,12 @@ end
 def populate_data_tables(db)
   db.execute("INSERT INTO classes (name, base_class_skill) VALUES ('soldier', 'boost defense when committing to a strong defense')")
   db.execute("INSERT INTO classes (name, base_class_skill) VALUES ('warrior', 'boost offense when committing to a strong attack')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('aggression', 2, 'always', 2, 'Increases attack numbers by +1 per level')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('lightning reflexes', 1, 'during the jump', 2, 'increases likelihood to get the first strike in combat')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('measured ferocity', 1, 'during a planning round', 2, 'has access to less energy for three rounds but gets a boost on the fourth')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('armored', 2, 'always', 1, 'increases the defense value of your armor')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('changing tides', 1, 'during a planning round', 1, 'has access to less energy for two rounds, then more energy for the next two rounds')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('better blocker', 1, 'always', 1, 'increases the defense-die size when blocking with a shield')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('aggression', 2, 'always', 2, 'Increases attack numbers by +1 per level')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('lightning reflexes', 1, 'during the jump', 2, 'increases likelihood to get the first strike in combat')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('measured ferocity', 1, 'during a planning round', 2, 'has access to less energy for three rounds but gets a boost on the fourth')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('armored', 2, 'always', 1, 'increases the defense value of your armor')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('changing tides', 1, 'during a planning round', 1, 'has access to less energy for two rounds, then more energy for the next two rounds')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('better blocker', 1, 'always', 1, 'increases the defense-die size when blocking with a shield')")
   db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('sword and light shield', '1d6 + 2xEnergy', '1d4 + 8', '4 + 1d10 +2xEnergy', 2)")
   db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('war pick', '1d8  + 1.5xEnergy', '1d10 + 15', '5 + 1d10 + 1xEnergy', 1)")
   db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('mace and heavy shield', '1d4 + 1.5xEnergy', '1d4 + 15', '15 + 1d4 + 1.5xEnergy', 1)")
@@ -150,8 +147,12 @@ end
 
 #==========Driver Code=============
 
-populate_data_tables(db)
 if !File.exist?("empire_fight.db")
+  db=SQLite3::Database.new("empire_fight.db")
   make_data_tables(db)
   populate_data_tables(db)
+  puts "Created initial data and tables"
+else
+  db=SQLite3::Database.new("empire_fight.db")
 end
+db.results_as_hash = true
