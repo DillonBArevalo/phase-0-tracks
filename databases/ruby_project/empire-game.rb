@@ -20,7 +20,7 @@ CHARACTER CREATION:
 
 methods/driver code:
   SETUP:
-    -if not already created: make db, characters table, pause state table, "class" table, equipment table
+    -if not already created: make db, characters table, "class" table (as in character class in the game, not a ruby class), equipment tables
 
   START:
     -welcome player and ask what feature they'd like to access: create, edit, or view
@@ -60,7 +60,7 @@ db.results_as_hash = true
 def make_data_tables(db)
   #make weapon table, armor table, class table, and skills table
   class_table_cmd = <<-SQL
-    CREATE TABLE classes (
+    CREATE TABLE IF NOT EXISTS classes (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
       base_class_skill VARCHAR(225)
@@ -68,7 +68,7 @@ def make_data_tables(db)
   SQL
 
   skill_table_cmd = <<-SQL
-    CREATE TABLE skills (
+    CREATE TABLE IF NOT EXISTS skills (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
       levels INT,
@@ -79,7 +79,7 @@ def make_data_tables(db)
   SQL
 
   weapon_table_cmd = <<-SQL
-    CREATE TABLE weapons (
+    CREATE TABLE IF NOT EXISTS weapons (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
       attack_formula VARCHAR(225),
@@ -90,7 +90,7 @@ def make_data_tables(db)
   SQL
 
   armor_table_cmd = <<-SQL
-    CREATE TABLE armors (
+    CREATE TABLE IF NOT EXISTS armors (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
       damage_resistance VARCHAR(225),
@@ -98,6 +98,10 @@ def make_data_tables(db)
       passive_def_boost INT
     );
   SQL
+  db.execute(class_table_cmd)
+  db.execute(skill_table_cmd)
+  db.execute(weapon_table_cmd)
+  db.execute(armor_table_cmd)
 end
 
 def populate_data_tables(db)
@@ -122,12 +126,14 @@ def make_fighter_table(db)
   SQL
 end
 
-def make_pause_table()
-end
-
 
 
 def startup()
   
 
 end
+
+
+#==========Driver Code=============
+
+make_data_tables(db)
