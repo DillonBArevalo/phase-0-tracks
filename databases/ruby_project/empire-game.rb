@@ -3,7 +3,7 @@
 #it was created as an alternative tabletop role-playing game (D&D is the famous example)
 #the basic premise is two fighters take turns using skills and allocating energy to their attacks and defenses until one of them wins the fight. 
 =begin
-Pseudocode for features 
+Pseudocode for features NOTE THAT A LOT OF THIS PSEUDOCODE DOESN'T QUITE MATCH THE ACTUAL CODE. I REFINED ON IT WHEN I MADE THE METHODS
 
 CHARACTER CREATION:
   -allow input for character creation. 
@@ -150,12 +150,20 @@ def create_fighter(db)
 
   class_number = select_class
   fighter_data << class_number
-  p fighter_data
+
+  skills = select_skills(db, class_number, weapon_number)
+  skills.each do |id|
+    fighter_data << id.to_i
+  end
+
+  db.execute("INSERT INTO fighters (name, str, dex, con, weapon_set_id, armor_id, class_id, skill1_id, skill2_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", fighter_data)
+
+  puts db.execute("SELECT * FROM fighters;") #PLACEHOLDER FOR THE VIEW FIGHTER METHOD
 end
 
 def make_fighter_table(db)
   fighter_table_cmd = <<-SQL
-    CREATE TABLE IF NOT EXISTS fighers (
+    CREATE TABLE IF NOT EXISTS fighters (
       id INTEGER PRIMARY KEY,
       name VARCHAR(255),
       str INT,
@@ -236,6 +244,43 @@ def select_class()
   puts ""
   puts "Which class would you like to use? input 1 to choose Soldier and 2 to choose Warrior"
   return gets.chomp.to_i
+end
+
+def select_skills(db, class_id, weapon_id)
+  puts ""
+  puts "Depending on the class you chose you now get to choose 2 skills from your class skill list!"
+  puts "If a skill has 2 levels you may choose it with both of your choices"
+  puts ""
+  puts "**Note that if you selected a war pick and a Soldier one of the skills will not appear in the list of possible skills as it has to do with a shield**"
+
+  skill_hashes = db.execute("SELECT * FROM skills WHERE usable_for_id=#{class_id}")
+  skill_hashes.delete_at(2) if class_id == 1 && weapon_id == 2
+  puts "Skill info:"
+  puts ""
+  puts " ---------------- "
+  puts ""
+
+  skill_hashes.each do |skill_hash|
+    skill_hash.each_pair do |primary_key, value|
+      next if primary_key == "id" || primary_key == "usable_for_id" || primary_key.class != String
+      if primary_key == "activate_during"
+        puts "This ability is available: #{value}"
+      else
+        puts "#{primary_key}: #{value}"
+      end
+    end
+    puts ""
+  end
+
+  puts ""
+  puts " ---------------- "
+  puts ""
+  
+  puts "Enter the numbers corresponding to the two skills you'd like to choose separated by a space"
+  puts "remember you can take the same skill twice if it has two levels"
+  
+  skills = gets.chomp.split
+  return skills
 end
 
 #==========Driver Code=============
