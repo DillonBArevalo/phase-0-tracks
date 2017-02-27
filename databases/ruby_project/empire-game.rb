@@ -29,15 +29,15 @@ methods/driver code:
   CHARACTER CREATION:
     -driver code that uses gets.chomp and puts to ask questions where relevant and run the appropriate methods to create a character
       -creates a hash for relevant data
-      -ask for name and add it to hash
+      -ask for name and add it to an array
     -method that creates basic stat values and returns them as an array
     -driver code that sets the stat values and sets them to the stats the user wants
-    -method that takes basic stats (and hash) and adds them to the hash
-    -method that gives a basic description of classes and asks for which class they'd like to create. adds choice to hash
+    -method that takes basic stats (and array) and adds them to the array
+    -method that gives a basic description of classes and asks for which class they'd like to create. adds choice to array
     -method that takes a class and gives skill options for it. lets user choose which skills to have
       -method for doing the above for soldier (class1)
       -method for doing above with warrior (class2)
-    -method that takes hash and adds it to the db as a character
+    -method that takes array and adds it to the db as a character
     -run view character  method for newly created character
 
   VIEW CHARACTERS:
@@ -119,9 +119,16 @@ def populate_data_tables(db)
   db.execute("INSERT INTO armors (name, damage_resistance_by_type, energy_budget_reduction, passive_def_boost) VALUES ('full plate armor', '12/11/8/9/5', 23, 22)")
 end
 
+def create_fighter(db)
+  make_fighter_table(db)
+  fighter_data = []
+  puts "Let's make a fighter! What would you like to name them?"
+  fighter_data << gets.chomp
+end
+
 def make_fighter_table(db)
   fighter_table_cmd = <<-SQL
-    CREATE TABLE fighers (
+    CREATE TABLE IF NOT EXISTS fighers (
       id INTEGER PRIMARY KEY,
       name VARCHAR(255),
       str INT,
@@ -135,6 +142,17 @@ def make_fighter_table(db)
       FOREIGN KEY (class_id) REFERENCES classes(id)
     );
   SQL
+  db.execute(fighter_table_cmd)
+end
+
+
+
+def create_stat_values()
+  stats = []
+  3.times do |i|
+    stats << 6 + (rand(6) + 1) + (rand(6) +1)
+  end 
+  return stats.sort.reverse
 end
 
 
@@ -156,3 +174,7 @@ else
   db=SQLite3::Database.new("empire_fight.db")
 end
 db.results_as_hash = true
+
+5.times do |i|
+  p create_stat_values
+end
