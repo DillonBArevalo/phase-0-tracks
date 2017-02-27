@@ -74,6 +74,7 @@ def make_data_tables(db)
       levels INT,
       activate_during VARCHAR(225),
       usable_for_id INT,
+      description VARCHAR(225),
       FOREIGN KEY (usable_for_id) REFERENCES classes(id)
     );
   SQL
@@ -93,7 +94,7 @@ def make_data_tables(db)
     CREATE TABLE IF NOT EXISTS armors (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
-      damage_resistance VARCHAR(225),
+      damage_resistance_by_type VARCHAR(225),
       energy_budget_reduction INT,
       passive_def_boost INT
     );
@@ -105,7 +106,20 @@ def make_data_tables(db)
 end
 
 def populate_data_tables(db)
-
+  db.execute("INSERT INTO classes (name, base_class_skill) VALUES ('soldier', 'boost defense when committing to a strong defense')")
+  db.execute("INSERT INTO classes (name, base_class_skill) VALUES ('warrior', 'boost offense when committing to a strong attack')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('aggression', 2, 'always', 2, 'Increases attack numbers by +1 per level')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('lightning reflexes', 1, 'during the jump', 2, 'increases likelihood to get the first strike in combat')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('measured ferocity', 1, 'during a planning round', 2, 'has access to less energy for three rounds but gets a boost on the fourth')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('armored', 2, 'always', 1, 'increases the defense value of your armor')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('changing tides', 1, 'during a planning round', 1, 'has access to less energy for two rounds, then more energy for the next two rounds')")
+  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id) VALUES ('better blocker', 1, 'always', 1, 'increases the defense-die size when blocking with a shield')")
+  db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('sword and light shield', '1d6 + 2xEnergy', '1d4 + 8', '4 + 1d10 +2xEnergy', 2)")
+  db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('war pick', '1d8  + 1.5xEnergy', '1d10 + 15', '5 + 1d10 + 1xEnergy', 1)")
+  db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('mace and heavy shield', '1d4 + 1.5xEnergy', '1d4 + 15', '15 + 1d4 + 1.5xEnergy', 1)")
+  db.execute("INSERT INTO armors (name, damage_resistance_by_type, energy_budget_reduction, passive_def_boost) VALUES ('leather armor', '3/1/0/2/0', 6, 10)")
+  db.execute("INSERT INTO armors (name, damage_resistance_by_type, energy_budget_reduction, passive_def_boost) VALUES ('scale armor', '8/6/4/5/2', 14, 15)")
+  db.execute("INSERT INTO armors (name, damage_resistance_by_type, energy_budget_reduction, passive_def_boost) VALUES ('full plate armor', '12/11/8/9/5', 23, 22)")
 end
 
 def make_fighter_table(db)
@@ -136,4 +150,8 @@ end
 
 #==========Driver Code=============
 
-make_data_tables(db)
+populate_data_tables(db)
+if !File.exist?("empire_fight.db")
+  make_data_tables(db)
+  populate_data_tables(db)
+end
