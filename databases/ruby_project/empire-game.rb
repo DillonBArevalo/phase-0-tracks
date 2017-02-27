@@ -23,7 +23,7 @@ methods/driver code:
 
   START:
     -welcome player and ask what feature they'd like to access: create, edit, or view
-    -run the relevant program based on their response.
+    -run the relevant methods based on their response.
 
   CHARACTER CREATION:
     -driver code that uses gets.chomp and puts to ask questions where relevant and run the appropriate methods to create a character
@@ -37,8 +37,11 @@ methods/driver code:
       -method for doing the above for soldier (class1)
       -method for doing above with warrior (class2)
     -method that takes hash and adds it to the db as a character
+    -run view character  method for newly created character
 
   VIEW CHARACTERS:
+    -ask to view all characters or to simply view names and select which one to view in detail
+    -create methods for both.
 
   EDIT CHARACTER:
     -choose character to edit
@@ -50,13 +53,32 @@ methods/driver code:
 
 require "sqlite3"
 
+db=SQLite3::Database.new("empire_fight.db")
+db.results_as_hash = true
+
 def make_data_tables()
+  #make weapon table, armor table, class table, and skills table
   class_table_cmd = <<-SQL
     CREATE TABLE classes (
       id INTEGER PRIMARY KEY,
-
+      name VARCHAR(225),
+      bonus_to_offense BOOLEAN,
+      bonus_to_defense BOOLEAN,
     );
   SQL
+  
+  skill_table_cmd = <<-SQL
+    CREATE TABLE skills (
+      id INTEGER PRIMARY KEY,
+      name VARCHAR(225),
+      level INT,
+      activate_during VARCHAR(225),
+    );
+  SQL
+end
+
+def populate_data_tables()
+
 end
 
 def make_fighter_table()
@@ -83,6 +105,6 @@ end
 
 
 def startup()
-  db=SQLite3::Database.new("empire_fight.db")
+  
 
 end
