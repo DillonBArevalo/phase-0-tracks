@@ -137,6 +137,9 @@ def create_fighter(db)
   fighter_data << (stats[order.index("dex")])
   fighter_data << (stats[order.index("con")])
 
+  weapon_number = select_weapons(db)
+  fighter_data << weapon_number
+
   p fighter_data
 end
 
@@ -148,8 +151,8 @@ def make_fighter_table(db)
       str INT,
       dex INT,
       con INT,
-      weapon_set_id VARCHAR(225),
-      armor_id VARCHAR(225),
+      weapon_set_id INT,
+      armor_id INT,
       class_id INT,
       FOREIGN KEY (weapon_set_id) REFERENCES weapon_sets(id),
       FOREIGN KEY (armor_id) REFERENCES aromr(id),
@@ -176,11 +179,15 @@ def select_weapons(db)
     puts "2. #{weapons_hashes[1]['name']}"
     puts "3. #{weapons_hashes[2]['name']}"
     puts "select 1, 2, or 3. or ask for more details on any weapon option by typing 'details ' followed by the weapon number"
+    
     choice = gets.chomp
+
     if choice == "1" || choice == "2" || choice == "3"
       break
     end
+
     details_for = choice.split[1].to_i - 1
+
     puts ""
     puts " ---------------- "
     puts ""
@@ -189,11 +196,11 @@ def select_weapons(db)
     puts "weapon damage formula: #{weapons_hashes[details_for]['damage_formula']}"
     puts "weapon defense formula: #{weapons_hashes[details_for]['defense_formula']}"
     puts "weapon class: #{weapons_hashes[details_for]['weapon_class']}"
-    
     puts ""
     puts " ---------------- "
     puts ""
   end
+
   return choice.to_i
 end
 
@@ -209,6 +216,4 @@ else
 end
 db.results_as_hash = true
 
-#create_fighter(db)
-
-puts select_weapons(db)
+create_fighter(db)
