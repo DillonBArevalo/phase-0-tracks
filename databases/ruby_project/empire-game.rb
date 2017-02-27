@@ -132,7 +132,9 @@ def create_fighter(db)
   
   stats = create_stat_values
   puts ""
-  puts "You've rolled the following values for stats:#{stats}. What order would you like to prioritize STR DEX and CON in? (write str, dex, and con separated by spaces in the order you'd like them from highest to lowest)"
+  puts "You've rolled the following values for stats:#{stats}."
+  puts "What order would you like to prioritize STR DEX and CON in?"
+  puts "(write str, dex, and con separated by spaces in the order you'd like them from highest to lowest)"
   order = gets.chomp.downcase.split
   fighter_data << (stats[order.index("str")])
   fighter_data << (stats[order.index("dex")])
@@ -146,6 +148,8 @@ def create_fighter(db)
   armor_number = select_equipmet(db, "armor")
   fighter_data << armor_number
 
+  class_number = select_class
+  fighter_data << class_number
   p fighter_data
 end
 
@@ -196,6 +200,8 @@ def select_equipmet(db, equipment_type)
     
     choice = gets.chomp
 
+    puts ""
+
     if choice == "1" || choice == "2" || choice == "3"
       break
     end
@@ -220,6 +226,17 @@ def select_equipmet(db, equipment_type)
   return choice.to_i
 end
 
+def select_class()
+  puts "You have two choices for your fighter's class!"
+  puts "They can be either a Warrior or a Soldier."
+  puts ""
+  puts "Soldiers focus on defense and have skills that help them not take damage."
+  puts ""
+  puts "Warriors, on the other hand, focus on offense. They have skills that boost their damage, and help them get the first strike off."
+  puts ""
+  puts "Which class would you like to use? input 1 to choose Soldier and 2 to choose Warrior"
+  return gets.chomp.to_i
+end
 
 #==========Driver Code=============
 
