@@ -52,6 +52,9 @@ methods/driver code:
     -display new results
 =end
 
+
+#######NOTE THAT I ASSUME CORRECT INPUT FOR ALL FIELDS WHEN DATA IS REQUESTED!
+
 require "sqlite3"
 
 def make_data_tables(db)
@@ -121,9 +124,12 @@ end
 
 def create_fighter(db)
   make_fighter_table(db)
+  
   fighter_data = []
+
   puts "Let's make a fighter! What would you like to name them?"
   fighter_data << gets.chomp
+  
   stats = create_stat_values
   puts "You've rolled the following values for stats:#{stats}. What order would you like to prioritize STR DEX and CON in? (write str, dex, and con separated by spaces in the order you'd like them from highest to lowest)"
   order = gets.chomp.downcase.split
@@ -161,13 +167,35 @@ def create_stat_values()
   return stats.sort.reverse
 end
 
-
-
-def startup()
-  
-
+def select_weapons(db)
+  weapons_hashes = db.execute("SELECT * FROM weapons;")
+  choice = nil
+  while choice != "1" || choice != "2" || choice != "3"
+    puts "You have the following weapon options:"
+    puts "1. #{weapons_hashes[0]['name']}"
+    puts "2. #{weapons_hashes[1]['name']}"
+    puts "3. #{weapons_hashes[2]['name']}"
+    puts "select 1, 2, or 3. or ask for more details on any weapon option by typing 'details ' followed by the weapon number"
+    choice = gets.chomp
+    if choice == "1" || choice == "2" || choice == "3"
+      break
+    end
+    details_for = choice.split[1].to_i - 1
+    puts ""
+    puts " ---------------- "
+    puts ""
+    puts "weapon name: #{weapons_hashes[details_for]['name']}"
+    puts "weapon attack formula: #{weapons_hashes[details_for]['attack_formula']}"
+    puts "weapon damage formula: #{weapons_hashes[details_for]['damage_formula']}"
+    puts "weapon defense formula: #{weapons_hashes[details_for]['defense_formula']}"
+    puts "weapon class: #{weapons_hashes[details_for]['weapon_class']}"
+    
+    puts ""
+    puts " ---------------- "
+    puts ""
+  end
+  return choice.to_i
 end
-
 
 #==========Driver Code=============
 
@@ -181,4 +209,6 @@ else
 end
 db.results_as_hash = true
 
-create_fighter(db)
+#create_fighter(db)
+
+puts select_weapons(db)
