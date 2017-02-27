@@ -131,14 +131,20 @@ def create_fighter(db)
   fighter_data << gets.chomp
   
   stats = create_stat_values
+  puts ""
   puts "You've rolled the following values for stats:#{stats}. What order would you like to prioritize STR DEX and CON in? (write str, dex, and con separated by spaces in the order you'd like them from highest to lowest)"
   order = gets.chomp.downcase.split
   fighter_data << (stats[order.index("str")])
   fighter_data << (stats[order.index("dex")])
   fighter_data << (stats[order.index("con")])
 
-  weapon_number = select_weapons(db)
+  puts ""
+
+  weapon_number = select_equipmet(db, "weapon")
   fighter_data << weapon_number
+
+  armor_number = select_equipmet(db, "armor")
+  fighter_data << armor_number
 
   p fighter_data
 end
@@ -174,15 +180,19 @@ def create_stat_values()
   return stats.sort.reverse
 end
 
-def select_weapons(db)
-  weapons_hashes = db.execute("SELECT * FROM weapons;")
+def select_equipmet(db, equipment_type)
+  hashes = db.execute("SELECT * FROM #{equipment_type}s;")
+  
   choice = nil
-  while choice != "1" || choice != "2" || choice != "3"
-    puts "You have the following weapon options:"
-    puts "1. #{weapons_hashes[0]['name']}"
-    puts "2. #{weapons_hashes[1]['name']}"
-    puts "3. #{weapons_hashes[2]['name']}"
-    puts "select 1, 2, or 3. or ask for more details on any weapon option by typing 'details ' followed by the weapon number"
+
+  while choice != "1" && choice != "2" && choice != "3"
+    puts "You have the following #{equipment_type} options:"
+    puts ""
+    3.times do |i|
+      puts "#{i + 1}. #{hashes[i]['name']}"
+    end
+    puts ""
+    puts "select 1, 2, or 3. or ask for more details on any #{equipment_type} option by typing 'details ' followed by the #{equipment_type} number"
     
     choice = gets.chomp
 
@@ -195,11 +205,13 @@ def select_weapons(db)
     puts ""
     puts " ---------------- "
     puts ""
-    puts "weapon name: #{weapons_hashes[details_for]['name']}"
-    puts "weapon attack formula: #{weapons_hashes[details_for]['attack_formula']}"
-    puts "weapon damage formula: #{weapons_hashes[details_for]['damage_formula']}"
-    puts "weapon defense formula: #{weapons_hashes[details_for]['defense_formula']}"
-    puts "weapon class: #{weapons_hashes[details_for]['weapon_class']}"
+
+    hashes[details_for].each_pair do |primary_key, value|
+      next if primary_key == "id"
+      next if primary_key.class != String
+      puts "#{equipment_type} #{primary_key.split("_").join(" ")}: #{hashes[details_for][primary_key]}"
+    end
+    
     puts ""
     puts " ---------------- "
     puts ""
@@ -207,6 +219,7 @@ def select_weapons(db)
 
   return choice.to_i
 end
+
 
 #==========Driver Code=============
 
