@@ -5,19 +5,6 @@
 =begin
 Pseudocode for features NOTE THAT A LOT OF THIS PSEUDOCODE DOESN'T QUITE MATCH THE ACTUAL CODE. I REFINED ON IT WHEN I MADE THE METHODS
 
-CHARACTER CREATION:
-  -allow input for character creation. 
-    -roll basic stats and allow them to be put into the character. 
-    -with basic stats, calculate relevant multi-stat values and display them for the user
-    -allow for a choice between two "classes" (meaning game class, not coding class)
-    -allow for a choice between 3 weapon sets
-    -allow for a choice of 2 skills from a short list for each class
-
-  -add a method to display character stats that runs at the end of character creation.
-    -break it into two methods: deep stats (things that wouldn't be relevant during combat) and combat stats
-    -run both at the end of character creation
-
-
 methods/driver code:
   SETUP:
     -if not already created: make db, characters table, "class" table (as in character class in the game, not a ruby class), equipment tables
@@ -28,7 +15,7 @@ methods/driver code:
 
   CHARACTER CREATION:
     -driver code that uses gets.chomp and puts to ask questions where relevant and run the appropriate methods to create a character
-      -creates a hash for relevant data
+      -creates an array for relevant data
       -ask for name and add it to an array
     -method that creates basic stat values and returns them as an array
     -driver code that sets the stat values and sets them to the stats the user wants
@@ -50,6 +37,9 @@ methods/driver code:
     -display choices based on response
     -update database
     -display new results
+
+
+    EDIT: I created two identical skills tables intentionally so that i could reference two different skills to them. I couldn't find an easy way to reference two things from the same table. I'll ask about this in office hours soon.
 =end
 
 
@@ -67,8 +57,20 @@ def make_data_tables(db)
     );
   SQL
 
-  skill_table_cmd = <<-SQL
-    CREATE TABLE IF NOT EXISTS skills (
+  skill_table1_cmd = <<-SQL
+    CREATE TABLE IF NOT EXISTS skills1 (
+      id INTEGER PRIMARY KEY,
+      name VARCHAR(225),
+      levels INT,
+      activate_during VARCHAR(225),
+      usable_for_id INT,
+      description VARCHAR(225),
+      FOREIGN KEY (usable_for_id) REFERENCES classes(id)
+    );
+  SQL
+
+  skill_table2_cmd = <<-SQL
+    CREATE TABLE IF NOT EXISTS skills2 (
       id INTEGER PRIMARY KEY,
       name VARCHAR(225),
       levels INT,
@@ -100,7 +102,8 @@ def make_data_tables(db)
     );
   SQL
   db.execute(class_table_cmd)
-  db.execute(skill_table_cmd)
+  db.execute(skill_table1_cmd)
+  db.execute(skill_table2_cmd) #fix this after i can ask about it!
   db.execute(weapon_table_cmd)
   db.execute(armor_table_cmd)
 end
@@ -108,12 +111,18 @@ end
 def populate_data_tables(db)
   db.execute("INSERT INTO classes (name, base_class_skill) VALUES ('soldier', 'boost defense when committing to a strong defense')")
   db.execute("INSERT INTO classes (name, base_class_skill) VALUES ('warrior', 'boost offense when committing to a strong attack')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('aggression', 2, 'always', 2, 'Increases attack numbers by +1 per level')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('lightning reflexes', 1, 'during the jump', 2, 'increases likelihood to get the first strike in combat')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('measured ferocity', 1, 'during a planning round', 2, 'has access to less energy for three rounds but gets a boost on the fourth')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('armored', 2, 'always', 1, 'increases the defense value of your armor')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('changing tides', 1, 'during a planning round', 1, 'has access to less energy for two rounds, then more energy for the next two rounds')")
-  db.execute("INSERT INTO skills (name, levels, activate_during, usable_for_id, description) VALUES ('better blocker', 1, 'always', 1, 'increases the defense-die size when blocking with a shield')")
+  db.execute("INSERT INTO skills1 (name, levels, activate_during, usable_for_id, description) VALUES ('aggression', 2, 'always', 2, 'Increases attack numbers by +1 per level')")
+  db.execute("INSERT INTO skills1 (name, levels, activate_during, usable_for_id, description) VALUES ('lightning reflexes', 1, 'during the jump', 2, 'increases likelihood to get the first strike in combat')")
+  db.execute("INSERT INTO skills1 (name, levels, activate_during, usable_for_id, description) VALUES ('measured ferocity', 1, 'during a planning round', 2, 'has access to less energy for three rounds but gets a boost on the fourth')")
+  db.execute("INSERT INTO skills1 (name, levels, activate_during, usable_for_id, description) VALUES ('armored', 2, 'always', 1, 'increases the defense value of your armor')")
+  db.execute("INSERT INTO skills1 (name, levels, activate_during, usable_for_id, description) VALUES ('changing tides', 1, 'during a planning round', 1, 'has access to less energy for two rounds, then more energy for the next two rounds')")
+  db.execute("INSERT INTO skills1 (name, levels, activate_during, usable_for_id, description) VALUES ('better blocker', 1, 'always', 1, 'increases the defense-die size when blocking with a shield')")
+  db.execute("INSERT INTO skills2 (name, levels, activate_during, usable_for_id, description) VALUES ('aggression', 2, 'always', 2, 'Increases attack numbers by +1 per level')")
+  db.execute("INSERT INTO skills2 (name, levels, activate_during, usable_for_id, description) VALUES ('lightning reflexes', 1, 'during the jump', 2, 'increases likelihood to get the first strike in combat')")
+  db.execute("INSERT INTO skills2 (name, levels, activate_during, usable_for_id, description) VALUES ('measured ferocity', 1, 'during a planning round', 2, 'has access to less energy for three rounds but gets a boost on the fourth')")
+  db.execute("INSERT INTO skills2 (name, levels, activate_during, usable_for_id, description) VALUES ('armored', 2, 'always', 1, 'increases the defense value of your armor')")
+  db.execute("INSERT INTO skills2 (name, levels, activate_during, usable_for_id, description) VALUES ('changing tides', 1, 'during a planning round', 1, 'has access to less energy for two rounds, then more energy for the next two rounds')")
+  db.execute("INSERT INTO skills2 (name, levels, activate_during, usable_for_id, description) VALUES ('better blocker', 1, 'always', 1, 'increases the defense-die size when blocking with a shield')")
   db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('sword and light shield', '1d6 + 2xEnergy', '1d4 + 8', '4 + 1d10 +2xEnergy', 2)")
   db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('war pick', '1d8  + 1.5xEnergy', '1d10 + 15', '5 + 1d10 + 1xEnergy', 1)")
   db.execute("INSERT INTO weapons (name, attack_formula, damage_formula, defense_formula, weapon_class) VALUES ('mace and heavy shield', '1d4 + 1.5xEnergy', '1d4 + 15', '15 + 1d4 + 1.5xEnergy', 1)")
@@ -128,7 +137,8 @@ def create_fighter(db)
   fighter_data = []
 
   puts "Let's make a fighter! What would you like to name them?"
-  fighter_data << gets.chomp
+  fighter_name = gets.chomp
+  fighter_data << fighter_name
   
   stats = create_stat_values
   puts ""
@@ -153,12 +163,17 @@ def create_fighter(db)
 
   skills = select_skills(db, class_number, weapon_number)
   skills.each do |id|
-    fighter_data << id.to_i
+    if class_number == 1
+      skill_id = id.to_i + 3
+    else
+      skill_id = id.to_i
+    end
+    fighter_data << skill_id
   end
 
   db.execute("INSERT INTO fighters (name, str, dex, con, weapon_set_id, armor_id, class_id, skill1_id, skill2_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", fighter_data)
 
-  puts db.execute("SELECT * FROM fighters;") #PLACEHOLDER FOR THE VIEW FIGHTER METHOD
+  view_fighter(db, fighter_name)
 end
 
 def make_fighter_table(db)
@@ -177,8 +192,8 @@ def make_fighter_table(db)
       FOREIGN KEY (weapon_set_id) REFERENCES weapon_sets(id),
       FOREIGN KEY (armor_id) REFERENCES aromr(id),
       FOREIGN KEY (class_id) REFERENCES classes(id)
-      FOREIGN KEY (skill1_id) REFERENCES skills(id)
-      FOREIGN KEY (skill2_id) REFERENCES skills(id)
+      FOREIGN KEY (skill1_id) REFERENCES skills1(id)
+      FOREIGN KEY (skill2_id) REFERENCES skills2(id)
     );
   SQL
   db.execute(fighter_table_cmd)
@@ -253,7 +268,7 @@ def select_skills(db, class_id, weapon_id)
   puts ""
   puts "**Note that if you selected a war pick and a Soldier one of the skills will not appear in the list of possible skills as it has to do with a shield**"
 
-  skill_hashes = db.execute("SELECT * FROM skills WHERE usable_for_id=#{class_id}")
+  skill_hashes = db.execute("SELECT * FROM skills1 WHERE usable_for_id=#{class_id}")
   skill_hashes.delete_at(2) if class_id == 1 && weapon_id == 2
   puts "Skill info:"
   puts ""
@@ -281,6 +296,28 @@ def select_skills(db, class_id, weapon_id)
   
   skills = gets.chomp.split
   return skills
+end
+
+
+def view_fighter(db, fighter_name)
+  view_cmd = "
+    SELECT fighters.name, fighters.str, fighters.dex, fighters.con, weapons.name, armors.name, classes.name, skills1.name, skills2.name 
+    FROM fighters
+    JOIN weapons ON fighters.weapon_set_id=weapons.id
+    JOIN armors ON fighters.armor_id=armors.id
+    JOIN classes ON fighters.class_id=classes.id
+    JOIN skills1 ON fighters.skill1_id=skills1.id
+    JOIN skills2 ON fighters.skill2_id=skills2.id
+    WHERE fighters.name = '#{fighter_name}'
+    "
+  fighter_hash = db.execute(view_cmd)[0]
+
+  #note that the following is using the numerical keys sqlite3 provides because the name primary key keys were messed up. I also plan to ask about this.
+  keys = ["Name", "Strength", "Dexterity", "Constitution", "Weapons", "Armor", "Class", "Skill 1", "Skill 2"]
+
+  9.times do |i|
+    puts "#{keys[i]}: #{fighter_hash[i]}"
+  end
 end
 
 #==========Driver Code=============
