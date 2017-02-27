@@ -154,9 +154,13 @@ def make_fighter_table(db)
       weapon_set_id INT,
       armor_id INT,
       class_id INT,
+      skill1_id INT,
+      skill2_id INT,
       FOREIGN KEY (weapon_set_id) REFERENCES weapon_sets(id),
       FOREIGN KEY (armor_id) REFERENCES aromr(id),
       FOREIGN KEY (class_id) REFERENCES classes(id)
+      FOREIGN KEY (skill1_id) REFERENCES skills(id)
+      FOREIGN KEY (skill2_id) REFERENCES skills(id)
     );
   SQL
   db.execute(fighter_table_cmd)
