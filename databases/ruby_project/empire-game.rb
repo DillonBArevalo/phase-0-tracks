@@ -322,6 +322,27 @@ def view_fighter(db, fighter_name)
   end
 end
 
+def view_command(db)
+  puts "The current list of characters is:"
+  puts ""
+  names = db.execute("SELECT fighters.name FROM fighters")
+  names.each do |hash_of_name|
+    puts hash_of_name["name"]
+  end
+  puts ""
+  puts "Enter any name to view that particular fighter or enter all to view all fighters"
+  fighter_name = gets.chomp
+  puts ""
+  if fighter_name.downcase == "all"
+    names.each do |hash_of_name|
+      view_fighter(db, hash_of_name["name"])
+      puts ""
+    end
+  else
+    view_fighter(db, fighter_name)
+    puts ""
+  end
+end
 #==========Driver Code=============
 
 if !File.exist?("empire_fight.db")
@@ -349,6 +370,7 @@ while continue
     create_fighter(db)
 
   when "view"
+    view_command(db)
 
   when "edit"
 
