@@ -1,13 +1,22 @@
 $ (document).ready( function(){
 
-  $ ("a").click(function(event) {
-    event.preventDefault();
+  $ ("img").hide();
+  $ ("#rude").hide();
 
-    $ ("img").addClass("clicked");
+  $ ("span").click(function(event) {
 
-    
+    $ ("img").show("slow");
+    $ (this).hide("slow");
+
+    $ ("img").hover(function(event) {
+      $ ("img").hide();
+      $ ("#rude").show();
+    });
+
+
 
   });
+
 
 
 
