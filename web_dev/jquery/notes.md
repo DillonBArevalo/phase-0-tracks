@@ -4,3 +4,11 @@ I want to test things often in small ways but largely only if i don't understand
 
 definitely going to take breaks as i want to stay focused.
 
+
+notes:
+
+watching videos was a good start. it oriented me well to what i was working with and pointed me towards greater resources. i was also able to watch at 2.5 times speed which greatly sped up the process. it didn't teach me much in the end, but was a good introduction.
+
+I did find the documentation and it had tutorials which i checked out. I went through the basics, coding along. then i modified the code and moved it to other files and messed with things until i was clear i understood everything. 
+
+didn't take much of a break as i was interested and didn't feel my concentration wane much.
