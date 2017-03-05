@@ -1,0 +1,12 @@
+img {
+  display: none;
+}
+
+img.clicked {
+  display: inline;
+}
+
+span {
+  color: red;
+}
+
