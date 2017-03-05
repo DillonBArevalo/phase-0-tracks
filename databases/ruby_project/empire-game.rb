@@ -300,7 +300,6 @@ def select_skills(db, class_id, weapon_id)
   return skills
 end
 
-
 def view_fighter(db, fighter_name)
   view_cmd = "
     SELECT fighters.name, fighters.str, fighters.dex, fighters.con, weapons.name, armors.name, classes.name, skills1.name, skills2.name 
@@ -313,7 +312,7 @@ def view_fighter(db, fighter_name)
     WHERE fighters.name = '#{fighter_name}'
     "
   fighter_hash = db.execute(view_cmd)[0]
-
+  
   #note that the following is using the numerical keys sqlite3 provides because the name primary key keys were messed up. I also plan to ask about this.
   keys = ["Name", "Strength", "Dexterity", "Constitution", "Weapons", "Armor", "Class", "Skill 1", "Skill 2"]
 
@@ -489,4 +488,3 @@ while continue
     puts "Whoops! That wasn't one of the options!"
   end
 end
-
