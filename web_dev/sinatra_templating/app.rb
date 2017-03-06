@@ -25,3 +25,9 @@ post '/students' do
 end
 
 # add static resources
+
+# route to my page
+
+get "/my_page" do
+  erb :my_page
+end
