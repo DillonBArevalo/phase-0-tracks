@@ -52,3 +52,15 @@ end
 get "/contact" do
   "1234 Contact Road <br> Nowhere, CA"
 end
+
+#write a GET route that displays good job
+
+get "/great_job" do
+  person=params[:name]
+  p person
+  if person == nil
+    "Good job!"
+  else
+    "Good job, #{person}"
+  end
+end
