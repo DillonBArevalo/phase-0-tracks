@@ -64,3 +64,12 @@ get "/great_job" do
     "Good job, #{person}"
   end
 end
+
+#write a GET route that takes 2 numbers and adds them
+
+get "/add/:num1/:num2" do
+  num1 = params[:num1].to_f
+  num2 = params[:num2].to_f
+  ans = num1+num2
+  ans.to_s
+end
